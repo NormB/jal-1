@@ -4,7 +4,8 @@ fn main() {
 }
 
 fn test_func() {
-    println!("Hello, jal-1");
+    let x = 5;
+    println!("The value of x is: {:?}", x);
 }
 
 #[cfg(test)]
