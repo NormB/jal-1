@@ -7,4 +7,4 @@ edition = "2021"
 
 [dependencies]
 rand = "0.8.5"
-random_word = { version = "0.4.1", features = ["en"] }
+random_word = { version = "0.4.1", features = ["en", "fr"] }
