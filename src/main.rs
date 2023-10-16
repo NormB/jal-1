@@ -2,12 +2,20 @@ use rand::{distributions::Alphanumeric, Rng};
 use random_word::Lang;
 use std::io;
 
+enum Guess<T, E> {
+    Ok(T),
+    Err(E),
+}
+
 fn main() {
     let secret_number = generate_secret_number();
     println!("The secret number is: {}", secret_number);
 
-    let guess = guess_secret_number();
-    println!("You guessed: {guess}");
+    let attempts = 3;
+    match guess_secret_number(attempts) {
+        Guess::Ok(num) => println!("You guessed: {}", num),
+        Guess::Err(msg) => println!("{}", msg),
+    }
 
     let mut list = generate_random_numbers(25, 0, 100);
     println!("Random list: {:?}", list);
@@ -31,8 +39,19 @@ fn generate_secret_number() -> i32 {
     secret_number
 }
 
-fn guess_secret_number() -> i32 {
+fn guess_secret_number(mut attempts: u8) -> Guess<u8, String> {
+    let mut failed_attempts: Vec<String> = Vec::new();
+
     loop {
+        if attempts == 0 {
+            return Guess::Err(format!(
+                "You have no more attempts! Failed attempts: {:?}",
+                failed_attempts
+            ));
+        } else {
+            attempts = attempts - 1;
+        }
+
         println!("Please input your guess:");
         let mut guess = String::new();
 
@@ -47,11 +66,12 @@ fn guess_secret_number() -> i32 {
             }
         }
 
-        // attempt to parse the input as an integet
-        match guess.trim().parse::<i32>() {
-            Ok(num) => return num,
+        // attempt to parse the input as an integer
+        match guess.trim().parse::<u8>() {
+            Ok(num) => return Guess::Ok(num),
             Err(_) => {
                 println!("Please type a number!");
+                failed_attempts.push(guess.trim().to_string());
                 continue;
             }
         }
