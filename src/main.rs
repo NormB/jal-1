@@ -1,4 +1,4 @@
-use rand::{distributions::Alphanumeric, Rng};
+use rand::distributions::Alphanumeric;
 use random_word::Lang;
 use std::cmp::Ordering;
 use std::io;
@@ -122,12 +122,27 @@ fn generate_random_words(count: usize, lang: Lang) -> Vec<String> {
     list
 }
 
+use rand::Rng;
+
+/// Generates a list of random numbers within a specified range.
+///
+/// # Arguments
+///
+/// * `count` - The number of random numbers to generate.
+/// * `min` - The minimum value of the random numbers.
+/// * `max` - The maximum value of the random numbers.
+///
+/// # Returns
+///
+/// A vector containing `count` random numbers between `min` and `max`.
 fn generate_random_numbers(count: usize, min: i32, max: i32) -> Vec<i32> {
     let mut rng = rand::thread_rng();
-    let mut list = Vec::new();
+    let mut list = Vec::with_capacity(count);
+
     for _ in 0..count {
-        let s: i32 = rng.gen_range(min..max);
+        let s = rng.gen_range(min..max);
         list.push(s);
     }
+
     list
 }
