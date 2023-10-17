@@ -1,4 +1,5 @@
 use rand::distributions::Alphanumeric;
+use rand::Rng;
 use random_word::Lang;
 use std::cmp::Ordering;
 use std::io;
@@ -147,8 +148,6 @@ fn generate_random_words(count: usize, lang: Lang) -> Vec<String> {
     // }
     // list
 }
-
-use rand::Rng;
 
 /// Generates a list of random numbers within a specified range.
 ///
