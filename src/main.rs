@@ -93,22 +93,34 @@ fn guess_secret_number(mut attempts: u8) -> Guess<u8, String> {
     }
 }
 
-// a function to sort a list of integers by updating the list
+/// Sorts a mutable slice of integers in ascending order.
+///
+/// # Arguments
+///
+/// * `list` - A mutable reference to a slice of integers that needs to be sorted.
+///
+/// # Examples
+///
+/// ```
+/// let mut list = [5, 2, 8, 1, 9];
+/// sort2(&mut list);
+/// assert_eq!(list, [1, 2, 5, 8, 9]);
+/// ```
 fn sort2(list: &mut [i32]) {
     list.sort();
 }
 
 // a function that build a list of random  strings
 fn generate_random_strings(count: usize, min: usize, max: usize) -> Vec<String> {
-    let mut list = Vec::new();
+    let mut list = Vec::with_capacity(count);
     for _ in 0..count {
         let random_length = rand::thread_rng().gen_range(min..=max);
-        let s: String = rand::thread_rng()
+        let random_string: String = rand::thread_rng()
             .sample_iter(&Alphanumeric)
             .take(random_length)
             .map(char::from)
             .collect();
-        list.push(s);
+        list.push(random_string);
     }
     list
 }
