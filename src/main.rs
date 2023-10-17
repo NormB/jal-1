@@ -113,13 +113,27 @@ fn generate_random_strings(count: usize, min: usize, max: usize) -> Vec<String> 
     list
 }
 
+/// Generates a list of random words based on the specified language.
+///
+/// # Arguments
+///
+/// * `count` - The number of random words to generate.
+/// * `lang` - The language of the random words to generate.
+///
+/// # Returns
+///
+/// A vector containing `count` random words based on the specified language.
 fn generate_random_words(count: usize, lang: Lang) -> Vec<String> {
-    let mut list = Vec::new();
-    for _ in 0..count {
-        let random_word = random_word::gen(lang).to_string();
-        list.push(random_word);
-    }
-    list
+    (0..count)
+        .map(|_| random_word::gen(lang).to_string())
+        .collect()
+
+    // let mut list = Vec::new();
+    // for _ in 0..count {
+    //     let random_word = random_word::gen(lang).to_string();
+    //     list.push(random_word);
+    // }
+    // list
 }
 
 use rand::Rng;
