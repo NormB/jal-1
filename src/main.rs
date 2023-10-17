@@ -1,5 +1,6 @@
 use rand::{distributions::Alphanumeric, Rng};
 use random_word::Lang;
+use std::cmp::Ordering;
 use std::io;
 
 enum Guess<T, E> {
@@ -9,12 +10,26 @@ enum Guess<T, E> {
 
 fn main() {
     let secret_number = generate_secret_number();
-    println!("The secret number is: {}", secret_number);
+    //println!("The secret number is: {}", secret_number);
 
-    let attempts = 3;
-    match guess_secret_number(attempts) {
-        Guess::Ok(num) => println!("You guessed: {}", num),
-        Guess::Err(msg) => println!("{}", msg),
+    loop {
+        let attempts = 3;
+        match guess_secret_number(attempts) {
+            Guess::Ok(num) => {
+                //println!("You guessed: {}", num);
+                match num.cmp(&secret_number) {
+                    Ordering::Less => println!("Too small!"),
+                    Ordering::Greater => println!("Too big!"),
+                    Ordering::Equal => {
+                        println!("You win!");
+                        break;
+                    }
+                }
+            }
+            Guess::Err(msg) => {
+                println!("{}", msg)
+            }
+        }
     }
 
     let mut list = generate_random_numbers(25, 0, 100);
@@ -33,7 +48,7 @@ fn main() {
     println!("Random word list (Fr): {:?}", l);
 }
 
-fn generate_secret_number() -> i32 {
+fn generate_secret_number() -> u8 {
     let secret_number = rand::thread_rng().gen_range(42..=100);
     //println!("The secret number is: {}", secret_number);
     secret_number
