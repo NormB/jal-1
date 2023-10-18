@@ -14,10 +14,11 @@ fn main() {
     //println!("The secret number is: {}", secret_number);
 
     loop {
-        let attempts = 3;
-        match guess_secret_number(attempts) {
+        let valid_attempts = 3;
+        match guess_secret_number(valid_attempts) {
             Guess::Ok(num) => {
                 //println!("You guessed: {}", num);
+                println!("valid_attempts: {}", valid_attempts);
                 match num.cmp(&secret_number) {
                     Ordering::Less => println!("Too small!"),
                     Ordering::Greater => println!("Too big!"),
