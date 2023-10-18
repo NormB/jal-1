@@ -9,9 +9,10 @@ pub enum Guess<T, E> {
 }
 
 pub fn generate_secret_number() -> u8 {
-    let secret_number = rand::thread_rng().gen_range(42..=100);
+    rand::thread_rng().gen_range(42..=100)
+    //let secret_number = rand::thread_rng().gen_range(1..101);
     //println!("The secret number is: {}", secret_number);
-    secret_number
+    //secret_number
 }
 
 pub fn guess_secret_number(mut attempts: u8) -> Guess<u8, String> {
@@ -24,7 +25,7 @@ pub fn guess_secret_number(mut attempts: u8) -> Guess<u8, String> {
                 failed_attempts
             ));
         } else {
-            attempts = attempts - 1;
+            attempts -= 1;
         }
 
         println!("Please input your guess:");
