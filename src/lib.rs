@@ -3,6 +3,11 @@ use rand::Rng;
 use random_word::Lang;
 use std::io;
 
+pub enum MyError {
+    no_more_attempts(String),
+    read_error(String),
+}
+
 pub enum Guess<T, E> {
     Ok(T),
     Err(E),
@@ -15,15 +20,15 @@ pub fn generate_secret_number() -> u8 {
     //secret_number
 }
 
-pub fn guess_secret_number(mut attempts: u8) -> Guess<u8, String> {
+pub fn guess_secret_number(mut attempts: u8) -> Guess<u8, MyError> {
     let mut failed_attempts: Vec<String> = Vec::new();
 
     loop {
         if attempts == 0 {
-            return Guess::Err(format!(
+            return Guess::Err(MyError::no_more_attempts(format!(
                 "You have no more attempts! Failed attempts: {:?}",
                 failed_attempts
-            ));
+            )));
         } else {
             attempts -= 1;
         }
@@ -37,8 +42,10 @@ pub fn guess_secret_number(mut attempts: u8) -> Guess<u8, String> {
                 //print!("You guessed: {guess}");
             }
             Err(error) => {
-                println!("Failed to read line: {}", error);
-                continue;
+                return Guess::Err(MyError::read_error(format!(
+                    "Failed to read line: {}",
+                    error
+                )));
             }
         }
 
