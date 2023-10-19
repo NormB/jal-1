@@ -1,11 +1,4 @@
-use jal_1::generate_random_numbers;
-use jal_1::generate_random_strings;
-use jal_1::generate_random_words;
-use jal_1::generate_secret_number;
-use jal_1::guess_secret_number;
-use jal_1::sort2;
-use jal_1::Guess;
-use jal_1::MyError;
+use jal_1::*;
 
 use random_word::Lang;
 use std::cmp::Ordering;
@@ -29,11 +22,11 @@ fn main() {
                     }
                 }
             }
-            Guess::Err(MyError::no_more_attempts(msg)) => {
+            Guess::Err(MyError::NoMoreAttempts(msg)) => {
                 println!("{}", msg);
                 break;
             }
-            Guess::Err(MyError::read_error(msg)) => {
+            Guess::Err(MyError::ReadError(msg)) => {
                 println!("{}", msg)
             }
         }

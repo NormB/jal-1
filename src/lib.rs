@@ -4,8 +4,8 @@ use random_word::Lang;
 use std::io;
 
 pub enum MyError {
-    no_more_attempts(String),
-    read_error(String),
+    NoMoreAttempts(String),
+    ReadError(String),
 }
 
 pub enum Guess<T, E> {
@@ -25,7 +25,7 @@ pub fn guess_secret_number(mut attempts: u8) -> Guess<u8, MyError> {
 
     loop {
         if attempts == 0 {
-            return Guess::Err(MyError::no_more_attempts(format!(
+            return Guess::Err(MyError::NoMoreAttempts(format!(
                 "You have no more attempts! Failed attempts: {:?}",
                 failed_attempts
             )));
@@ -42,7 +42,7 @@ pub fn guess_secret_number(mut attempts: u8) -> Guess<u8, MyError> {
                 //print!("You guessed: {guess}");
             }
             Err(error) => {
-                return Guess::Err(MyError::read_error(format!(
+                return Guess::Err(MyError::ReadError(format!(
                     "Failed to read line: {}",
                     error
                 )));
