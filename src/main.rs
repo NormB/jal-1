@@ -1,3 +1,4 @@
+use jal_1::sort2;
 use jal_1::*;
 
 use random_word::Lang;

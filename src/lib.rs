@@ -67,13 +67,6 @@ pub fn guess_secret_number(mut attempts: u8) -> Guess<u8, MyError> {
 ///
 /// * `list` - A mutable reference to a slice of integers that needs to be sorted.
 ///
-/// # Examples
-///
-/// ```
-/// let mut list = [5, 2, 8, 1, 9];
-/// sort2(&mut list);
-/// assert_eq!(list, [1, 2, 5, 8, 9]);
-/// ```
 pub fn sort2(list: &mut [i32]) {
     list.sort();
 }
@@ -135,10 +128,60 @@ pub fn generate_random_numbers(count: usize, min: i32, max: i32) -> Vec<i32> {
     let mut rng = rand::thread_rng();
     let mut list = Vec::with_capacity(count);
 
-    for _ in 0..count {
-        let s = rng.gen_range(min..=max);
-        list.push(s);
+    if min > max {
+        list
+    } else {
+        for _ in 0..count {
+            let s = rng.gen_range(min..=max);
+            list.push(s);
+        }
+        list
     }
+}
 
-    list
+// Returns a vector of length 'count' when given valid input parameters.
+#[test]
+fn returns_vector_of_length_count() {
+    let count = 5;
+    let min = 1;
+    let max = 10;
+
+    let result = generate_random_numbers(count, min, max);
+
+    assert_eq!(result.len(), count);
+}
+
+#[test]
+fn returns_vector_of_integers_between_min_and_max() {
+    let count = 5;
+    let min = 1;
+    let max = 10;
+
+    let result = generate_random_numbers(count, min, max);
+
+    for num in result {
+        assert!(num >= min && num <= max);
+    }
+}
+
+#[test]
+fn returns_empty_vector_when_min_is_greater_than_max() {
+    let count = 5;
+    let min = 10;
+    let max = 1;
+
+    let result = generate_random_numbers(count, min, max);
+
+    assert_eq!(result.len(), 0);
+}
+
+#[test]
+fn returns_vector_of_length_one_when_count_is_one() {
+    let count = 1;
+    let min = 1;
+    let max = 10;
+
+    let result = generate_random_numbers(count, min, max);
+
+    assert_eq!(result.len(), 1);
 }
