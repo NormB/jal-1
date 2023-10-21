@@ -1,5 +1,4 @@
 use rand::distributions::Alphanumeric;
-use rand::Rng;
 use random_word::Lang;
 use std::io;
 
@@ -14,6 +13,7 @@ pub enum Guess<T, E> {
 }
 
 pub fn generate_secret_number() -> u8 {
+    use rand::Rng;
     rand::thread_rng().gen_range(42..=100)
     //let secret_number = rand::thread_rng().gen_range(1..101);
     //println!("The secret number is: {}", secret_number);
@@ -80,6 +80,8 @@ pub fn sort2(list: &mut [i32]) {
 
 // a function that build a list of random  strings
 pub fn generate_random_strings(count: usize, min: usize, max: usize) -> Vec<String> {
+    use rand::Rng;
+
     let mut list = Vec::with_capacity(count);
     for _ in 0..count {
         let random_length = rand::thread_rng().gen_range(min..=max);
@@ -128,11 +130,13 @@ pub fn generate_random_words(count: usize, lang: Lang) -> Vec<String> {
 ///
 /// A vector containing `count` random numbers between `min` and `max`.
 pub fn generate_random_numbers(count: usize, min: i32, max: i32) -> Vec<i32> {
+    use rand::Rng;
+
     let mut rng = rand::thread_rng();
     let mut list = Vec::with_capacity(count);
 
     for _ in 0..count {
-        let s = rng.gen_range(min..max);
+        let s = rng.gen_range(min..=max);
         list.push(s);
     }
 
